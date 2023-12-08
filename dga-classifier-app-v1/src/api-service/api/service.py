@@ -13,7 +13,7 @@ from starlette.middleware.cors import CORSMiddleware
 tracker_service = TrackerService()
 
 # Setup FastAPI app
-app = FastAPI(title="API Server", description="API Server", version="v1")
+app = FastAPI(title="API Server", description="API Server", version="v2")
 
 # Enable CORSMiddleware
 app.add_middleware(
