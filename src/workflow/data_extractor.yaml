@@ -1,0 +1,26 @@
+# PIPELINE DEFINITION
+# Name: data-extractor-pipeline
+components:
+  comp-data-extractor:
+    executorLabel: exec-data-extractor
+deploymentSpec:
+  executors:
+    exec-data-extractor:
+      container:
+        args:
+        - extract.py
+        image: mrrootb0t/data-extractor:pipeline
+pipelineInfo:
+  name: data-extractor-pipeline
+root:
+  dag:
+    tasks:
+      data-extractor:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-data-extractor
+        taskInfo:
+          name: data-extractor
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.3.0

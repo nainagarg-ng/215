@@ -1,0 +1,26 @@
+# PIPELINE DEFINITION
+# Name: data-formator-pipeline
+components:
+  comp-data-formator:
+    executorLabel: exec-data-formator
+deploymentSpec:
+  executors:
+    exec-data-formator:
+      container:
+        args:
+        - format.py
+        image: mrrootb0t/data-formator:pipeline
+pipelineInfo:
+  name: data-formator-pipeline
+root:
+  dag:
+    tasks:
+      data-formator:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-data-formator
+        taskInfo:
+          name: data-formator
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.3.0

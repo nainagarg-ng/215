@@ -1,0 +1,19 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+dask = "*"
+pandas = "*"
+google-cloud-storage = "*"
+pyarrow = "*"
+gcsfs = "*"
+whois = "*"
+python-whois = "*"
+tldextract = "*"
+
+[requires]
+python_version = "3.8"

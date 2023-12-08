@@ -1,0 +1,23 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+uvicorn = "*"
+fastapi = "*"
+pandas = "*"
+google-cloud-storage = "*"
+torch = ">=2.0.0, !=2.0.1, !=2.1.0"
+transformers = "*"
+python-multipart = "*"
+google-cloud-aiplatform = "*"
+
+[requires]
+python_version = "3.8"
+
+
+
+

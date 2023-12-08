@@ -1,0 +1,21 @@
+version: "3.8"
+networks:
+    default:
+        name: streamlit-app-network
+        external: true
+services:
+    streamlit-app:
+        image: streamlit-app
+        container_name: streamlit-app
+        volumes:
+            - ../secrets:/secrets
+            - ../test_models:/app
+        environment:
+            GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS}
+            GCP_PROJECT: ${GCP_PROJECT}
+            GCP_ZONE: ${GCP_ZONE}
+            GCP_BUCKET: ${GCP_BUCKET}
+            GCP_BUCKET_BRONZE_FOLDER: ${GCP_BUCKET_BRONZE_FOLDER}
+            GCP_BUCKET_SILVER_FOLDER: ${GCP_BUCKET_SILVER_FOLDER}
+        ports:
+            - "8501:8501"

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DGA Classifier</title>
+    <!-- Add reference to Google fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Google Material Design Styles -->
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <!-- Add javascript package axios for accessing APIs -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles1.css">
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="logo" id="site-title">DGA Classifier</div>
+        <div class="logo">
+            <img src="https://1000logos.net/wp-content/uploads/2017/02/Harvard-Logo.png" alt="Harvard Logo" id="harvard-logo">
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="header">
+            <h1>Check Your Domain Legitimacy</h1>
+        </header>
+        <form id="domainForm">
+            <div class="input-group">
+                <input type="text" id="domainInput" aria-label="Enter domain" placeholder="Enter a domain name to check its legitimacy" />
+                <button type="button" id="domainButton" onclick="check_domain()">Check Domain</button>
+            </div>
+            <div class="result" id="input_result">
+            </div>
+        </form>
+
+        <form id="fileForm">
+            <div class="upload-group">
+                <input type="file" id="file-upload" accept=".txt, .csv" aria-label="Upload file" hidden/>
+                <label for="file-upload" class="custom-file-upload">Or upload a text file for bulk check:</label>
+                <span id="file-upload-info"></span>
+            </div>
+            <button type="button" id="output-btn" onclick="outputResult()">Download Results</button>
+            <div class="result" id="file_result">
+            </div>
+        </form>
+        
+        <p></p>
+
+        <div class="info-section-container">
+            <div class="info-section" id="section1">
+                <h2>What is DGA?</h2>
+                <p>Learn about how DGAs are used in cybersecurity threats.</p>
+                <a href="#" id="learn-more-dga">Learn More</a>
+            </div>
+            <div class="info-section" id="section2">
+                <h2>Resources</h2>
+                <p>Explore further readings and external resources.</p>
+                <a href="#" id="further-reading">Explore Resources</a>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2023 DGA Classifier. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

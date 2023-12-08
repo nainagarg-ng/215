@@ -1,0 +1,19 @@
+version: "3.8"
+networks:
+    default:
+        name: data-formator-network
+        external: true
+services:
+    data-formator:
+        image: data-formator
+        container_name: data-formator
+        volumes:
+            - ${SECRETS_DIR}:/secrets
+            - ../format:/app
+        environment:
+            GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS_data} #"_data" specific to service account secret for GCP storage
+            GCP_PROJECT: ${GCP_PROJECT}
+            GCP_ZONE: ${GCP_ZONE}
+            GCP_BUCKET: ${GCP_BUCKET}
+            GCP_BUCKET_BRONZE_FOLDER: ${GCP_BUCKET_BRONZE_FOLDER}
+            GCP_BUCKET_SILVER_FOLDER: ${GCP_BUCKET_SILVER_FOLDER}

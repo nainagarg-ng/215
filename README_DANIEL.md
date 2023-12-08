@@ -168,11 +168,22 @@ Project Organization
 <br>
 
 ### Milestone5
-Our Milestone 5 emphasizes the final stages of our project, focusing on the development and deployment of the DGA classifier application that ties together the various components built in our previous milestones. We have designed an intuitive user interface and deployed it in GCP to ensure the functionality of the project for real-world usage. In this milestone, we designed the overall architecture of our application, including the user interface, functionality, and underlying code structure to ensure maintainability and efficiency. We developed robust APIs that facilitate communication between the front end and back end of the application using VERTEX AI's deployed model endpoint. In regard to our deployment strategy, we utilized Ansible to create, provision, and deploy our frontend and backend to GCP in an automated fashion.
+Our Milestone 5 emphasizes the final stages of our project, focusing on the development and deployment of the DGA classifier application that ties together the various components built in our previous milestones. 
 
-1). **Application Design Document:** The user can find our detailed design document including solution and technical architectures outlining the DGA classifier application architecture, user interface, and code organization principles here:
 
-[Link to the Design Document (Google Slides)](https://docs.google.com/presentation/d/18nRPqZH9mjtGM8iJtijlz_zeByMHuvDeHMsd_OUqRqU/edit?usp=sharing)
+1. **Application Design Document**: We've planned out the entire structure of our application. This includes how the user interacts with it, its functions, and the solid code structure beneath it, making sure it's easy to maintain and operates efficiently.
+
+2. **API & Frontend Implementation**: 
+  - We've crafted an easy-to-use interface and made it live on Google Cloud Platform (GCP) to ensure the project works smoothly for real-world use.
+  - We've created robust APIs that act as connectors between the front end (what the user sees) and the back end (where the magic happens). These APIs utilize VERTEX AI's deployed model endpoint to make everything work seamlessly.
+
+3. **Deployment Strategy**: To make things run smoothly, we've used Ansible. It helps us automate the process of creating, setting up, and launching both the frontend and backend of our application on GCP.
+
+
+
+### 1. Application Design Document: 
+
+Our comprehensive design document  details the solution and technical architectures. It outlines the structure of the DGA classifier application, including the user interface and how the code is organized. Find it here: [Link to the Design Document (Google Slides)](https://docs.google.com/presentation/d/18nRPqZH9mjtGM8iJtijlz_zeByMHuvDeHMsd_OUqRqU/edit?usp=sharing)
 
 ![Solution Architecture 1](images/solution_architecture1.png)
 
@@ -180,25 +191,30 @@ Our Milestone 5 emphasizes the final stages of our project, focusing on the deve
 
 ![Technical Architecture 1](images/technical_architecture1.png)
 
-![Technical Architecture 2](images/technical_architecture2.png)
+### 2. APIs & Frontend Implementation:
 
-2). APIs & Frontend Implementation: Working code for the APIs and front-end interface, complete with documentation and testing to verify proper functionality, can be found in this repo, `Milestone5`. 
+The repository named `Milestone5` contains functional code for both the APIs and the front-end interface. It includes documentation and testing to ensure everything works correctly. 
 
-The basic structure for our dga classifier app contains three containers: <b>api-service</b>, <b>frontend-simple</b>, and <b>frontend-react</b>.
+Our DGA Classifier app has three main parts in its structure:
 
-## APIs
+- <b>api-service</b>
+- <b>frontend-simple</b>
+- <b>frontend-react</b>
 
-### Run api-service
 
-The <b>api-service</b> contains three .py files: 
+#### APIs
+
+##### Run api-service
+
+The <b>api-service</b> contains four .py files: 
 
 - <b>service.py</b>: Implement API service with FastAPI
 
-- <b>tracker.py</b>: Download the best model: Here we are using `bert_dga_classifier` for our model. The downloaded model will be stored in `/persistent/experiments` folder.
+- <b>tracker.py</b>: Download the best model (`bert_dga_classifier`). The downloaded model is stored in the `/persistent/experiments` folder.
 
-- <b>model.py</b>: Load the model and use it to predict <--- we faced problems using the model because of platform issues between our Apple M1 processors and the VMs
-- 
-- <b>vertexAImodel.py</b>: Leverages VERTEX AI's endpoint to make predictions <--- This is the solution we ended up using
+- <b>model.py</b>: Loads the model for predictions
+
+- <b>vertexAImodel.py</b>: Leverages VERTEX AI's endpoint for predictions.
 
 There are two predict functions:
 
@@ -206,60 +222,34 @@ There are two predict functions:
 
 - `predict_from_file`: Predict when the user uploads a .txt file
 
+To run the api-service container, use the following commands:
+
 ```
+# Run the container locally 
 cd /dga-classifier-app-v1/src/api-service
 sh docker-shell.sh
 uvicorn-server
 ```
 
-Then go to `http://localhost:9000/`
+Then access `http://localhost:9000/`
 
 It shows a message: "{"message":"Welcome to the API Service"}".
 
-If you go to `http://localhost:9000/docs#/`, you can see all the api services implemented:
+If you navigate to `http://localhost:9000/docs#/`, you can see all the api services implemented:
 
 ![api service 1](images/api-service1.png)
 
 ![api service 2](images/api-service2.png)
 
-## Frontend Implementation
+#### Frontend Implementation
 
-### Run frontend-simple
+We've built two frontend interfaces: frontend-react (using React) and frontend-simple (without React).
 
-(Note: frontend-simple is only used as a prototype and will not be deployed.)
 
-```
-cd /dga-classifier-app-v1/src/frontend-simple
-sh docker-shell.sh
-http-server
-```
-
-Then go to `http://localhost:8080/`
-
-You can test a domain name by entering it manually:
-
-![frontend simple 1](images/frontend-simple1.png)
-
-![frontend simple 2](images/frontend-simple2.png)
-
-Or you can upload a .txt file and get the result in a .txt file in the following format:
+##### Run frontend-react
 
 ```
-[
-  {
-    "domain": "cnn.com",
-    "result": "legit"
-  },
-  {
-    "domain": "asdgoaio1239z0dvnkmk.com",
-    "result": "zeus-newgoz"
-  }
-]
-```
-
-### Run frontend-react
-
-```
+# Run the container locally 
 cd /dga-classifier-app-v1/src/frontend-react
 sh docker-shell.sh
 yarn install
@@ -274,13 +264,56 @@ You can test a domain name by entering it manually:
 
 ![frontend react 2](images/frontend-react2.png)
 
-Or you can upload a .txt file:
+Alternatively you can upload a .txt file:
 
 ![frontend react 3](images/frontend-react3.png)
 
-Note: it will show an alert message if the user is trying to upload a file that is not .txt:
+Note: An alert message will pop up if the user tries to upload a file that isn't .txt:
+
 
 ![frontend react 4](images/frontend-react4.png)
+
+The result will be displayed in a .txt file in this format:
+
+
+```
+# Input
+enn.com
+asdgoaio1239z0dvnkmk.com
+```
+
+```
+# Output
+[
+  {
+    "domain": "cnn.com",
+    "result": "legit"
+  },
+  {
+    "domain": "asdgoaio1239z0dvnkmk.com",
+    "result": "zeus-newgoz"
+  }
+]
+```
+
+##### Run frontend-simple
+
+Frontend-simple is only used as a prototype and was not deployed.
+
+```
+# Run the container locally 
+cd /dga-classifier-app-v1/src/frontend-simple
+sh docker-shell.sh
+http-server
+```
+
+Then go to `http://localhost:8080/`
+
+You can test a domain name by entering it manually:
+
+![frontend simple 1](images/frontend-simple1.png)
+
+![frontend simple 2](images/frontend-simple2.png)
 
 Again, the downloaded result will look like this:
 
@@ -296,3 +329,28 @@ Again, the downloaded result will look like this:
   }
 ]
 ```
+
+
+## 3. Deployment Strategy
+
+Utilizing Ansible, we successfully deployed three containers:
+
+- api-service
+- frontend
+- web-server
+
+The steps involved were:
+- Creation of the 3 containers
+- Virtual Machine (VM) setup
+- VM provisioning
+- Containers deployment to the VM
+- Running the web-server
+
+![deployed 1](images/deployed1.jpeg)
+
+![deployed 2](images/deployed2.jpeg)
+
+![deployed 3](images/deployed3.jpeg)
+
+
+

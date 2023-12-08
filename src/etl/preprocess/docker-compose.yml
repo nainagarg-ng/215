@@ -1,0 +1,20 @@
+version: "3.8"
+networks:
+    default:
+        name: data-processor-network
+        external: true
+services:
+    data-processor:
+        image: data-processor
+        container_name: data-processor
+        volumes:
+            - ${SECRETS_DIR}:/secrets
+            - ../preprocess:/app
+        environment:
+            GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS_data}
+            GCP_PROJECT: ${GCP_PROJECT}
+            GCP_ZONE: ${GCP_ZONE}
+            GCP_BUCKET: ${GCP_BUCKET}
+            GCP_BUCKET_BRONZE_FOLDER: ${GCP_BUCKET_BRONZE_FOLDER}
+            GCP_BUCKET_SILVER_FOLDER: ${GCP_BUCKET_SILVER_FOLDER}
+            GCP_BUCKET_GOLD_FOLDER: ${GCP_BUCKET_GOLD_FOLDER}

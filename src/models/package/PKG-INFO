@@ -1,0 +1,11 @@
+Metadata-Version: 1.0
+
+Name: DGA App Trainer
+
+Version: 0.0.1
+
+License: Public
+
+Description: Training of DGA Classifier
+
+Platform: Vertex

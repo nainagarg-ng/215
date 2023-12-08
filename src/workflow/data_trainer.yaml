@@ -1,0 +1,135 @@
+# PIPELINE DEFINITION
+# Name: data-trainer-pipeline
+components:
+  comp-data-training:
+    executorLabel: exec-data-training
+    inputDefinitions:
+      parameters:
+        GCP_PROJECT:
+          parameterType: STRING
+        GCP_REGION:
+          parameterType: STRING
+        GCS_BUCKET_URI:
+          parameterType: STRING
+        WANDB_KEY:
+          parameterType: STRING
+        batch_size:
+          defaultValue: 64.0
+          isOptional: true
+          parameterType: NUMBER_INTEGER
+        data_token:
+          parameterType: STRING
+        epochs:
+          defaultValue: 1.0
+          isOptional: true
+          parameterType: NUMBER_INTEGER
+        frac:
+          defaultValue: 0.0001
+          isOptional: true
+          parameterType: NUMBER_DOUBLE
+        lr:
+          defaultValue: 1.0e-05
+          isOptional: true
+          parameterType: NUMBER_DOUBLE
+        model_name:
+          defaultValue: bert-base-uncased
+          isOptional: true
+          parameterType: STRING
+deploymentSpec:
+  executors:
+    exec-data-training:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - data_training
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.3.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"'  &&\
+          \  python3 -m pip install --quiet --no-warn-script-location 'google-cloud-aiplatform'\
+          \ && \"$0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef data_training(\n    WANDB_KEY: str,\n    data_token: str,\n \
+          \   GCP_PROJECT: str,\n    GCP_REGION: str,\n    GCS_BUCKET_URI: str,\n\
+          \    epochs: int = 1,\n    lr: float = 1e-5,\n    batch_size: int = 64,\n\
+          \    frac: float =0.0001,\n    model_name: str = \"bert-base-uncased\",\n\
+          ):\n    print(\"Model Training Job\")\n\n    import os\n    import json\n\
+          \    import random\n    import string\n    import google.cloud.aiplatform\
+          \ as aip\n\n    #ENV VARIABLES\n    environment_variables = {\"data_token\"\
+          :data_token,\n                            \"wandb_key\": WANDB_KEY}\n\n\
+          \    # Initialize Vertex AI SDK for Python\n    aip.init(project=GCP_PROJECT,\
+          \ location=GCP_REGION, staging_bucket=GCS_BUCKET_URI)\n\n    def generate_uuid(length:\
+          \ int = 8) -> str:\n        return \"\".join(random.choices(string.ascii_lowercase\
+          \ + string.digits, k=length))\n\n    job_id = generate_uuid()\n    DISPLAY_NAME\
+          \ = \"dga_classifier_test\" + job_id\n\n    TRAIN_IMAGE = \"us-docker.pkg.dev/vertex-ai/training/pytorch-gpu.1-13.py310:latest\"\
+          \n\n    job = aip.CustomPythonPackageTrainingJob(\n        display_name=DISPLAY_NAME,\n\
+          \        python_package_gcs_uri=f\"{GCS_BUCKET_URI}/trainer.tar.gz\",\n\
+          \        python_module_name=\"trainer.task\",\n        container_uri=TRAIN_IMAGE,\n\
+          \        project=GCP_PROJECT\n    )\n\n    CMDARGS = [f\"--epochs={epochs}\"\
+          , \n               f\"--batch_size={batch_size}\", \n               f\"\
+          --frac={frac}\",\n               f\"--lr={lr}\",\n               f\"--model_name={model_name}\"\
+          ]\n\n    MODEL_DIR = GCS_BUCKET_URI\n    TRAIN_COMPUTE = \"n1-standard-4\"\
+          \n    #TRAIN_GPU = \"NVIDIA_TESLA_T4\"\n    #TRAIN_NGPU = 1\n\n    print(f\"\
+          {GCS_BUCKET_URI}/trainer.tar.gz\")\n    #print(TRAIN_IMAGE)\n\n    # Run\
+          \ the training job on Vertex AI\n    # sync=True, # If you want to wait\
+          \ for the job to finish\n    try:\n        job.run(\n            model_display_name=None,\n\
+          \            args=CMDARGS,\n            replica_count=1,\n            machine_type=TRAIN_COMPUTE,\n\
+          \            #accelerator_type=TRAIN_GPU,\n            #accelerator_count=TRAIN_NGPU,\n\
+          \            base_output_dir=MODEL_DIR,\n            environment_variables=environment_variables,\n\
+          \            sync=True,\n        )\n    except Exception as err:\n     \
+          \   print(err)\n\n"
+        image: python:3.10
+pipelineInfo:
+  name: data-trainer-pipeline
+root:
+  dag:
+    tasks:
+      data-training:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-data-training
+        inputs:
+          parameters:
+            GCP_PROJECT:
+              runtimeValue:
+                constant: harvardmlops
+            GCP_REGION:
+              runtimeValue:
+                constant: us-central1
+            GCS_BUCKET_URI:
+              runtimeValue:
+                constant: gs://dga-training
+            WANDB_KEY:
+              runtimeValue:
+                constant: 6b71979d3413a1673d7bb36423329ca11a52bcd9
+            data_token:
+              runtimeValue:
+                constant: '{"type": "service_account", "project_id": "harvardmlops",
+                  "private_key_id": "6aa5b82ead6651381794b0cfb78a831b4597b74a", "private_key":
+                  "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC1wegtjHVC2YB3\ngedZMnijXT0uUHiQHsoa3GLmWnpgrKrAS+9DQBR7L/MlRy8LyRhef1KeFUbW1+mm\nLZL0eO6xULbNzPARIhbepdfjxxpsWBi1c0sDQXojc/qOXIt5JRcKYeLBMCcm/aN5\nCLsNIa+dDHdL3nU2dWTSpH6Jn6unwayArOCHfhMFJ/laMspj3jm5dqR5eyGUtPsg\nr9z+mhSzsLIMpbCkY3NIjz9lwhIWRFsSRMLsVSklKK11vkZTdrO5t0G8xIR93GRz\nnU2sh+ZtBZODnDGJAffU5RBuLOlm3NyaXfTjVj1Eg66Gv5KebamZ/hMeXq4yz2cl\n9tnsPZgtAgMBAAECggEAWgNwoVIs5pECAu2GLhIFVd6AxLWcp79f1yKrJirL7aHF\npJtWoKcVHZb3I1CYF42dcHs85sZhwVfHwoFShJl5mL4A8nYatFl+GwDmJMu/pcWR\nYxd4oGGmg/VVsnhZqIL6YK1ul79pvHEjqvbscAntR2lbkWrYAMLtzjYh5rV5VQgJ\nTdUuPiYfXXKIIcbwzjw6XOaWtl1hR/y2OlNtzHb3Dtv6PS9tB3i4qQOSybgTMsyM\n/oVCFOEFQID6A6aeiQvLs2wAkb7bkdezThnXA/35K1GMH7CYpwGYyfNYd63FSymD\n9Xu7h+m0qJ9J4DQBlkE/3A6Uw0RQvexSZEPHPRUJTwKBgQD4HpbZESCY6+kb2q9D\n4v0iM9HnqjE/zyaWTRaJ7iPsO/kS0sh7MHwOAJ2KVfnYPiurzeqPZkecrA0TjNnw\nleMCHYs92/gTHKwUFj1zZZiSwlcSv9TxeC4AR2sifJRMqSs00oDk9pP5bcT2aLv6\nNHgPls9jc4lcnRgOoBLEYpOw3wKBgQC7h72yWJE7BJfPzI7f9TkopQ5HbblDib7a\nU3gyMa55eTQrH/7tE/pzY88NHn5NGzmMqP2b/QDSPNZ4o6ucUwS2J8xnNwx8mxu5\n98RKeE19f+b2R0jXwccXoXJCcS6g3+NAO+ABDkhgEMgP244Y5BkqVMhjEr0GcmI7\nw7s9IUtccwKBgQCVA8oVE/Q/429dCzm3y9u7buPh/pUVfZPvMN0Yea2Zc2tjorRF\nSBk5T6VOL9Sdyrjvtfvpo8PelHZGB5HcrChqXNQDktiqoc23QqQlah74BT/GQu/h\nFgyKnln5nFh0siUA1GwVFwJIC2T/mGdNHbX9ptVnJTyaIr8QCZM73vhUgQKBgEpw\nvLVyANx7m0OqgMCYGENxGbTy8krEABWscpcCL68alMHVpp03hACQCx27EAnNl8+l\nOV7VVKEf80baOYIJVmJ0c+g46uT/sUbl+m5RSPlbbzQt4dV7n2ta8/857HeByDS0\nT9w7bjFsF+5rigGJcg/irdTeGFjZyPLOZKIEeGTPAoGBAODWB0V/eu2XeTeDfSX5\njud5OnaVryYYdtjJ5JUTHChuG9Ur4uhFn/6kNZh33ccNytXP5C0sUqf4nO/YOh+p\ndHAgc4mb/wDIzWbvAbPWULGRpWnWfGG1TI57eUQCOdNMu94N2zyHR2Bv5HCPbUyd\nz6dh9NpJWe59nqCcL3YOR1AU\n-----END
+                  PRIVATE KEY-----\n", "client_email": "model-trainer@harvardmlops.iam.gserviceaccount.com",
+                  "client_id": "112728610636853892799", "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+                  "token_uri": "https://oauth2.googleapis.com/token", "auth_provider_x509_cert_url":
+                  "https://www.googleapis.com/oauth2/v1/certs", "client_x509_cert_url":
+                  "https://www.googleapis.com/robot/v1/metadata/x509/model-trainer%40harvardmlops.iam.gserviceaccount.com",
+                  "universe_domain": "googleapis.com"}'
+        taskInfo:
+          name: data-training
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.3.0
