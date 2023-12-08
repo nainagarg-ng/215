@@ -17,6 +17,21 @@
 5.  **GitHub Repository**: The repository named `milestone6` contains functional code for both the APIs and the front-end interface. All code, documentation, and relevant assets are published in this GitHub repository, with well-structured instructions to aid replication and/or learning from our project.
     [Click here!](https://github.io/rob-chavez/ac2152023_cybersafe/)
 
+<p align="center">
+  <img src="https://github.com/rob-chavez/ac2152023_cybersafe/assets/87348168/3d1d5581-48e5-465e-a9eb-5f662910b66f" width="120" height="120">
+</p>
+
+![image](https://github.com/rob-chavez/ac2152023_cybersafe/assets/87348168/d6cfe2be-e5af-49aa-9149-a8195742079c)
+![image](https://github.com/rob-chavez/ac2152023_cybersafe/assets/87348168/17a90f3b-a71c-40de-bfed-a290f1425077)
+![image](https://github.com/rob-chavez/ac2152023_cybersafe/assets/87348168/b229ea82-00eb-4502-937e-1fe3618292dc)
+![image](https://github.com/rob-chavez/ac2152023_cybersafe/assets/87348168/eac368ce-308e-4cbd-a1a4-a5c0a9737e63)
+![image](https://github.com/rob-chavez/ac2152023_cybersafe/assets/87348168/b68b93a6-1acb-4f3b-bfb7-9a6b5a5d9c9e)
+![image](https://github.com/rob-chavez/ac2152023_cybersafe/assets/87348168/7af790e0-24aa-4bdf-9cda-a47d25b9e916)
+![image](https://github.com/rob-chavez/ac2152023_cybersafe/assets/87348168/c6c41ec0-5e55-47aa-b1b4-8e8839888dde)
+![image](https://github.com/rob-chavez/ac2152023_cybersafe/assets/87348168/d3254238-4a0d-4952-ab51-90998cb2e849)
+![image](https://github.com/rob-chavez/ac2152023_cybersafe/assets/87348168/81eaa024-d16f-4ff7-aec6-a8e4cd103983)
+<img src="https://github.com/rob-chavez/ac2152023_cybersafe/assets/87348168/b3fe64da-ef8e-4c53-96e1-25d4320610b0" width="60" height="40">
+
 <br>
 
 
