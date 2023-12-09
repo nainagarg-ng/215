@@ -203,7 +203,7 @@ We built a user-friendly React app to identify domains produced by domain genera
    ![](images/k8_app_dga.png)
    <br>
    ![](images/k8_app_legit_2.png)
-    <br>
+   <br>
      
 2. **Deployment Plan and Execution with Ansible**:
    - Ansible provided an automated deployment solution with creating, setting up, and launching both the frontend and backend of our application on GCP. Our application has streamlined deployment processes and configuration management with consistency across different environments.
