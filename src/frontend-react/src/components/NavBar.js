@@ -21,7 +21,7 @@ function NavBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" style={{ flexGrow: 1 }}>
-            DGA Classifier (v4)
+            DGA Classifier (v5)
           </Typography>
           <img src={logo} alt="Logo" style={{ height: '60px' }} />
         </Toolbar>
