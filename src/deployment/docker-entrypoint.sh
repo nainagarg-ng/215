@@ -14,9 +14,9 @@ echo $args
 
 if [[ -z ${args} ]]; 
 then
-    /bin/bash
-    # pipenv shell
+    # /bin/bash
+    pipenv shell
 else
   /bin/bash $args
-  # pipenv run $args
+  pipenv run $args
 fi
