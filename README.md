@@ -202,8 +202,6 @@ We built a user-friendly React app to identify domains produced by domain genera
    - Here is our deployed app on a K8s cluster in the Google Cloud Platform (GCP):
    ![](images/k8_app_dga.png)
    <br>
-   ![](images/k8_app_legit.png)
-   <br>
    ![](images/k8_app_legit_2.png)
     <br>
      
