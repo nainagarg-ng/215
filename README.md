@@ -200,7 +200,12 @@ We built a user-friendly React app to identify domains produced by domain genera
    - CyberSafe is a structured application with user accessibility through intuitve interaction and functionality built on a solid code structure. We refined our frontend and backend by expanding it with the Kubernetes-based scaling solution so that the application can handle real-world scenarios and peak loads efficiently. Ansible scripts helped us manage creating and updating the k8s cluster by managing infrastructure as code and keeping track of our app infrastructure as code in GitHub. which helped use setup deployments in a very automated way.
   
    - Here is our deployed app on a K8s cluster in the Google Cloud Platform (GCP):
-     
+   ![1](images/k8_app_dga.png)
+   <br>
+   ![2](images/k8_app_legit.png)
+   <br>
+   ![3](images/k8_app_legit_2.png)
+    <br>
      
 2. **Deployment Plan and Execution with Ansible**:
    - Ansible provided an automated deployment solution with creating, setting up, and launching both the frontend and backend of our application on GCP. Our application has streamlined deployment processes and configuration management with consistency across different environments.
