@@ -4,7 +4,7 @@
   gather_facts: false
 
   vars:
-    cluster_name: "dga-classifier-app-cluster-m1"
+    cluster_name: "dga-classifier-app-cluster-m3"
     machine_type: "n2d-standard-2"
     machine_disk_size: 30
     initial_node_count: 2

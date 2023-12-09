@@ -9,6 +9,9 @@
   - name: Print tag
     debug:
       var: tag
+  - name: Print tag gcp_project
+    debug:
+      var: gcp_project
   - name: Build frontend container image
     community.general.docker_image:
       build:

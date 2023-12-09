@@ -4,7 +4,7 @@
   gather_facts: false
 
   vars:
-    cluster_name: "dga-classifier-app-cluster-m1"
+    cluster_name: "dga-classifier-app-cluster-m3"
   
   tasks:
   - name: "Connect to cluster (update kubeconfig)"
