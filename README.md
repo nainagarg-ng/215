@@ -38,149 +38,112 @@
 PROJECT ORGANIZATION
 --------------------
 ```
-        ├── LICENSE
-        ├── README.md
-        ├── dga-classifier-app-v1 <--- Where our app is stored
-        │   ├── LICENSE
-        │   ├── images
-        │   └── src
-        │       ├── api-service
-        │       │   ├── Dockerfile
-        │       │   ├── Pipfile
-        │       │   ├── Pipfile.lock
-        │       │   ├── api
-        │       │   │   ├── model.py
-        │       │   │   ├── service.py
-        │       │   │   ├── tracker.py
-        │       │   │   └── vertexAImodel.py   <---- WE DECIDED TO USE VERTEX AI ENDPOINT FOR THIS MILESTONE
-        │       │   ├── docker-entrypoint.sh
-        │       │   ├── docker-shell.bat
-        │       │   └── docker-shell.sh
-        │       ├── deployment
-        │       │   ├── Dockerfile
-        │       │   ├── deploy-*.yml files
-        │       │   ├── docker-entrypoint.sh
-        │       │   ├── docker-shell.bat
-        │       │   ├── docker-shell.sh
-        │       │   ├── inventory.yml
-        │       │   └── nginx-conf
-        │       │       └── nginx
-        │       │           └── nginx.conf
-        │       ├── frontend-react
-        │       │   ├── Dockerfile
-        │       │   ├── Dockerfile.dev
-        │       │   ├── conf.d
-        │       │   │   └── default.conf
-        │       │   ├── docker-shell.bat
-        │       │   ├── docker-shell.sh
-        │       │   ├── package.json
-        │       │   ├── public
-        │       │   │   ├── index.html
-        │       │   │   └── manifest.json
-        │       │   ├── src
-        │       │   │   ├── app
-        │       │   │   │   ├── App.css
-        │       │   │   │   ├── App.js
-        │       │   │   │   └── App.test.js
-        │       │   │   ├── components
-        │       │   │   ├── index.css
-        │       │   │   ├── index.js
-        │       │   │   ├── services
-        │       └── frontend-simple
-        │           ├── Dockerfile
-        │           ├── docker-shell.bat
-        │           ├── docker-shell.sh
-        │           ├── index.html
-        ├── images
-        ├── notebooks
-        │   ├── EDA_and_Model.ipynb
-        │   ├── model.ipynb
-        │   ├── model_CNN_LSTM.ipynb
-        │   └── tree_bert_based_experiments.ipynb
-        ├── persistent
-        │   └── experiments
-        ├── references
-        │   └── Chin2018_Chapter_AMachineLearningFrameworkForSt.pdf
-        ├── reports
-        │   ├── images
-        │   ├── milestone2.md
-        │   └── milestone3.md
-        │   ├── milestone4.md
-        └── src
-            ├── deploy_model
-            │   ├── Dockerfile
-            │   ├── docker-shell.sh
-            │   ├── handler.py     <------ HANDLER FOR DEPLOYING PYTORCH MODEL TO VERTEX AI
-            │   ├── predict.py
-            │   └── stage.py
-            ├── etl
-            │   ├── extracts
-            │   │   ├── Dockerfile
-            │   │   ├── Pipfile
-            │   │   ├── Pipfile.lock
-            │   │   ├── README.md
-            │   │   ├── docker-compose.yml
-            │   │   ├── docker-entrypoint.sh
-            │   │   ├── docker-shell.sh
-            │   │   ├── extract.py
-            │   │   ├── extract.sh
-            │   │   └── images
-            │   ├── format
-            │   │   ├── Dockerfile
-            │   │   ├── Pipfile
-            │   │   ├── Pipfile.lock
-            │   │   ├── README.md
-            │   │   ├── docker-compose.yml
-            │   │   ├── docker-entrypoint.sh
-            │   │   ├── docker-shell.sh
-            │   │   ├── format.py
-            │   │   └── images
-            │   └── preprocess
-            │       ├── Dockerfile
-            │       ├── Pipfile
-            │       ├── Pipfile.lock
-            │       ├── README.md
-            │       ├── docker-compose.yml
-            │       ├── docker.sh
-            │       ├── features.py
-            │       ├── images
-            │       └── preprocess.py
-            ├── models
-            │   ├── Dockerfile
-            │   ├── Pipfile
-            │   ├── Pipfile.lock
-            │   ├── cli.py
-            │   ├── docker-entrypoint.sh
-            │   ├── docker-shell.sh
-            │   ├── package
-            │   │   ├── PKG-INFO
-            │   │   ├── setup.cfg
-            │   │   ├── setup.py
-            │   │   └── trainer
-            │   │       ├── __init__.py
-            │   │       └── task.py
-            │   └── package-trainer.sh
-            ├── optimizations
-            │   └── Quantization.ipynb
-            ├── streamlit
-            │   ├── Dockerfile
-            │   ├── Pipfile
-            │   ├── Pipfile.lock
-            │   ├── cli.py
-            │   ├── docker-compose.yml
-            │   └── docker.sh
-            └── workflow
-                ├── Dockerfile
-                ├── Pipfile
-                ├── Pipfile.lock
-                ├── cli.py
-                ├── data_extractor.yaml
-                ├── data_formator.yaml
-                ├── data_trainer.yaml
-                ├── docker-entrypoint.sh
-                ├── docker-shell.sh
-                ├── model.py
-                └── pipeline.yaml
+.
+├── LICENSE
+├── README.md
+├── README_DANIEL.md
+├── images
+├── notebooks
+│   ├── EDA_and_Model.ipynb
+│   ├── model.ipynb
+│   ├── model_CNN_LSTM.ipynb
+│   └── tree_bert_based_experiments.ipynb
+├── persistent
+│   └── experiments
+│       ├── bert_dga_classifier.pt
+│       └── best_model.json
+├── references
+│   └── Chin2018_Chapter_AMachineLearningFrameworkForSt.pdf
+├── reports
+│   ├── images
+│   ├── milestone2.md
+│   └── milestone3.md
+├── src
+│   ├── api-service
+│   │   ├── Dockerfile
+│   │   ├── Pipfile
+│   │   ├── Pipfile.lock
+│   │   ├── api
+│   │   ├── docker-entrypoint.sh
+│   │   ├── docker-shell.bat
+│   │   └── docker-shell.sh
+│   ├── deploy_model
+│   │   ├── Dockerfile
+│   │   ├── docker-shell.sh
+│   │   ├── handler.py
+│   │   ├── predict.py
+│   │   └── stage.py
+│   ├── deployment
+│   │   ├── Dockerfile
+│   │   ├── deploy-app.sh
+│   │   ├── deploy-create-instance.yml
+│   │   ├── deploy-docker-images.yml
+│   │   ├── deploy-k8s-cluster.yml
+│   │   ├── deploy-k8s-tic-tac-toe.yml
+│   │   ├── deploy-provision-instance.yml
+│   │   ├── deploy-setup-containers.yml
+│   │   ├── deploy-setup-webserver.yml
+│   │   ├── docker-entrypoint.sh
+│   │   ├── docker-shell.bat
+│   │   ├── docker-shell.sh
+│   │   ├── inventory-prod.yml
+│   │   ├── inventory.yml
+│   │   └── nginx-conf
+│   ├── deployment.zip
+│   ├── etl
+│   │   ├── extracts
+│   │   ├── format
+│   │   └── preprocess
+│   ├── frontend-react
+│   │   ├── Dockerfile
+│   │   ├── Dockerfile.dev
+│   │   ├── conf.d
+│   │   ├── docker-shell.bat
+│   │   ├── docker-shell.sh
+│   │   ├── node_modules
+│   │   ├── package.json
+│   │   ├── public
+│   │   ├── src
+│   │   └── yarn.lock
+│   ├── frontend-simple
+│   │   ├── Dockerfile
+│   │   ├── docker-shell.bat
+│   │   ├── docker-shell.sh
+│   │   ├── index.html
+│   │   ├── script.js
+│   │   └── styles1.css
+│   ├── models
+│   │   ├── Dockerfile
+│   │   ├── Pipfile
+│   │   ├── Pipfile.lock
+│   │   ├── cli.py
+│   │   ├── docker-entrypoint.sh
+│   │   ├── docker-shell.sh
+│   │   ├── package
+│   │   └── package-trainer.sh
+│   ├── optimizations
+│   │   └── Quantization.ipynb
+│   ├── streamlit
+│   │   ├── Dockerfile
+│   │   ├── Pipfile
+│   │   ├── Pipfile.lock
+│   │   ├── cli.py
+│   │   ├── docker-compose.yml
+│   │   └── docker.sh
+│   └── workflow
+│       ├── Dockerfile
+│       ├── Pipfile
+│       ├── Pipfile.lock
+│       ├── cli.py
+│       ├── data_extractor.yaml
+│       ├── data_formator.yaml
+│       ├── data_trainer.yaml
+│       ├── docker-entrypoint.sh
+│       ├── docker-shell.sh
+│       ├── model.py
+│       └── pipeline.yaml
+
+
 ```
 
 ## **MILESTONE 6**
@@ -200,6 +163,7 @@ We built a user-friendly React app to identify domains produced by domain genera
    - CyberSafe is a structured application with user accessibility through intuitve interaction and functionality built on a solid code structure. We refined our frontend and backend by expanding it with the Kubernetes-based scaling solution so that the application can handle real-world scenarios and peak loads efficiently. Ansible scripts helped us manage creating and updating the k8s cluster by managing infrastructure as code and keeping track of our app infrastructure as code in GitHub. which helped use setup deployments in a very automated way.
   
    - Here is our deployed app on a K8s cluster in the Google Cloud Platform (GCP):
+
    ![k8_dga](images/k8_app_dga.png)
    <br>
    ![k8_legit](images/k8_app_legit_2.png)
