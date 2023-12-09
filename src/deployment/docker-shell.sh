@@ -15,6 +15,10 @@ export GOOGLE_APPLICATION_CREDENTIALS=/secrets/deployment.json
 
 echo $SECRETS_DIR
 echo $(realpath $SECRETS_DIR)
+echo $(realpath $BASE_DIR)
+echo $GOOGLE_APPLICATION_CREDENTIALS
+echo $GCP_PROJECT
+
 
 # Build the image based on the Dockerfile
 #docker build -t $IMAGE_NAME -f Dockerfile .
@@ -32,5 +36,5 @@ docker run --rm --name $IMAGE_NAME -ti \
 -e USE_GKE_GCLOUD_AUTH_PLUGIN=True \
 -e GCP_PROJECT=$GCP_PROJECT \
 -e GCP_ZONE=$GCP_ZONE \
-$IMAGE_NAME
+$IMAGE_NAME 
 
