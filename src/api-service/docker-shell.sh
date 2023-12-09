@@ -22,7 +22,7 @@ docker run --rm --name $IMAGE_NAME -ti \
 -v "$SECRETS_DIR":/secrets \
 -v "$PERSISTENT_DIR":/persistent \
 -p 9000:9000 \
--e DEV=1 \
+-e DEV=0 \
 -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/harvardmlops.json \
 -e GCS_BUCKET_NAME=$GCS_BUCKET_NAME \
 $IMAGE_NAME
