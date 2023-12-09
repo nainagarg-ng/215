@@ -43,7 +43,7 @@
                 run: frontend
             spec:
               containers:
-              - image: "gcr.io/{{ gcp_project }}/dga-classifier-app-frontend-react:{{ tag.stdout}}"
+              - image: "gcr.io/{{ gcp_project }}/gcr.io/harvardmlops/dga-classifier-app-frontend-react:{{ tag.stdout}}"
                 imagePullPolicy: IfNotPresent
                 name: frontend
                 ports:
@@ -76,7 +76,7 @@
                   secret:
                     secretName: gcp-service-key
               containers:
-              - image: gcr.io/{{ gcp_project }}/dga-classifier-app-api-service:{{ tag.stdout}}
+              - image: gcr.io/{{ gcp_project }}/gcr.io/harvardmlops/dga-classifier-app-api-service:{{ tag.stdout}}
                 imagePullPolicy: IfNotPresent
                 name: api
               restartPolicy: Always
